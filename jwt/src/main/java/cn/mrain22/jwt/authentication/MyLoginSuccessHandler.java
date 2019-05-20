@@ -42,7 +42,8 @@ public class MyLoginSuccessHandler extends SavedRequestAwareAuthenticationSucces
 //                .setClaims(claimsMap)
                 //将认证后的authentication写入token，验证时，直接验证它
                 .claim("authentication",authentication)
-                .setSubject("主题")  //主题
+                //设置主题
+                .setSubject("主题")
                 //过期时间
                 .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 24 * 1000))
                 //加密方式
