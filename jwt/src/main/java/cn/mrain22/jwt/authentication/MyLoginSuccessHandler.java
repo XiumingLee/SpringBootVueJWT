@@ -6,7 +6,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -23,9 +22,6 @@ import java.util.Map;
 public class MyLoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler { //自定义的
 
     private Logger logger = LoggerFactory.getLogger(getClass());
-
-    @Autowired
-    private SecurityProperties securityProperties;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -50,8 +46,7 @@ public class MyLoginSuccessHandler extends SavedRequestAwareAuthenticationSucces
                 .signWith(SignatureAlgorithm.HS512, "MyJWTtest")
                 .compact();
         httpServletResponse.addHeader("Authorization", "Mrain" + Token);
-
-        //        要做的工作就是将Authentication以json的形式返回给前端。 需要工具类ObjectMapper，Spring已自动注入。
+        //要做的工作就是将Authentication以json的形式返回给前端。 需要工具类ObjectMapper，Spring已自动注入。
         //设置返回类型
         httpServletResponse.setContentType("application/json;charset=UTF-8");
         Map<String, Object> tokenInfo = new HashMap<String, Object>();
