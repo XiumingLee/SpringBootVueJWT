@@ -7,11 +7,11 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationServiceException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * @Author: Xiuming Lee
@@ -21,12 +21,14 @@ import java.util.Date;
  */
 public class JwtUtils {
     private static Logger logger = LoggerFactory.getLogger(JwtUtils.class);
+    private static HashMap<String,Authentication> hashMap = new HashMap<>();
     /**
      *  生成JWT token
      * @param authentication Spring Security认证后的信息
      * @return
      */
     public static String generateToken(Authentication authentication){
+        hashMap.put("authentication",authentication);
         String token = Jwts.builder()
                 //设置token的信息
                 //将认证后的authentication写入token，验证时，直接验证它
@@ -43,6 +45,8 @@ public class JwtUtils {
     }
 
     public static void tokenParser(String token){
+        Authentication authentication1 = hashMap.get("authentication");
+        System.out.println(authentication1);
         // 解析token.
         Claims claims = Jwts.parser()
                 .setSigningKey("MyJWTtest")
@@ -65,8 +69,8 @@ public class JwtUtils {
         // 放入到SecurityContextHolder，表示认证通过
         Object tokenInfo = claims.get("authentication");
         //通过com.alibaba.fastjson将其在转换。
-        Authentication toknAuthentication = JSONObject.parseObject(JSONObject.toJSONString(tokenInfo), Authentication.class);
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(toknAuthentication.getPrincipal(),null,toknAuthentication.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        JwtAuthentication toknAuthentication = JSONObject.parseObject(JSONObject.toJSONString(tokenInfo), JwtAuthentication.class);
+//        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(toknAuthentication.getPrincipal(),null,toknAuthentication.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(toknAuthentication);
     }
 }

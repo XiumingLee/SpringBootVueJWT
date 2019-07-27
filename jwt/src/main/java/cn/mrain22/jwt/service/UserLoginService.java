@@ -17,6 +17,6 @@ public class UserLoginService implements UserDetailsService {
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         return  new User("1",
                 passwordEncoder.encode("1"),
-                AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
+                AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_admin"));
     }
 }

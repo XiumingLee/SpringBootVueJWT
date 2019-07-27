@@ -4,6 +4,7 @@
     <button @click="test()">hello(不需要登录)</button>
     <button @click="test1()">测试1(need)</button>
     <button @click="test2()">测试2(need)</button>
+    <button @click="needAdminRole()">needAdminRole(need)</button>
     <button @click="logout()">注销登录</button>
     <hr>
     <div style="color:red;">{{msg}}</div>
@@ -58,6 +59,12 @@ export default {
         this.msg = res.data;
       });
     },
+     needAdminRole() {
+          this.$http.get("/needAdminRole").then(res => {
+            console.log(res);
+            this.msg = res.data;
+          });
+        },
     logout(){
       this.$http.get("/logout").then(res => {
         console.log(res);
