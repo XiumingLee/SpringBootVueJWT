@@ -35,7 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(myLoginSuccessHandler)
                 .failureHandler(myLoginFailureHandler);
         http.authorizeRequests()
-                .antMatchers("/needAdminRole").hasRole("admin")
+                // 此处的角色不需要`ROLE_` 前缀,实现UserDetailsService设置角色时需要`ROLE_` 前缀
+                .antMatchers("/needAdminRole").hasRole("ADMIN")
                 .antMatchers("/hello","/login","/loginInfo","/logoutSuccess")
                 .permitAll()
                 .anyRequest()

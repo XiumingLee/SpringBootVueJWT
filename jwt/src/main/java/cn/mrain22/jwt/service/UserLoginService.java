@@ -18,6 +18,6 @@ public class UserLoginService implements UserDetailsService {
         return  new User("1",
                 passwordEncoder.encode("1"),
                 // 此处的角色需要`ROLE_`前缀。Spring Security配置中的角色不需要`ROLE_` 前缀
-                AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_admin"));
+                AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_ADMIN"));
     }
 }
