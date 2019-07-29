@@ -5,6 +5,7 @@
     <button @click="test1()">测试1(need)</button>
     <button @click="test2()">测试2(need)</button>
     <button @click="needAdminRole()">needAdminRole(need)</button>
+    <button @click="needTestRole()">needTestRole(need)</button>
     <button @click="logout()">注销登录</button>
     <hr>
     <div style="color:red;">{{msg}}</div>
@@ -61,6 +62,12 @@ export default {
     },
      needAdminRole() {
           this.$http.get("/needAdminRole").then(res => {
+            console.log(res);
+            this.msg = res.data;
+          });
+        },
+        needTestRole() {
+          this.$http.get("/needTestRole").then(res => {
             console.log(res);
             this.msg = res.data;
           });

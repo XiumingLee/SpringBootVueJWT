@@ -29,6 +29,11 @@ public class MrainController {
         return "needAdminRole";
     }
 
+    @GetMapping("/needTestRole")
+    public String needTestRole(){
+        return "TEST角色才能访问";
+    }
+
     @RequestMapping("/loginInfo")
     public String loginInfo(){
         return "请先登录！";
